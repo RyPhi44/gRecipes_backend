@@ -1,0 +1,26 @@
+{
+  "name": "grecipes_backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyPhi44/gRecipes_backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RyPhi44/gRecipes_backend/issues"
+  },
+  "homepage": "https://github.com/RyPhi44/gRecipes_backend#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "knex": "^0.12.7",
+    "nodemon": "^1.11.0",
+    "pg": "^6.1.4"
+  }
+}
