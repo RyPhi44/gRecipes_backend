@@ -2,52 +2,50 @@ var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
 
-function Recipe() {return knex('recipe')}
+function User() {return knex('user')}
 
 // **************************** CREATE ***********************************
 
-// ^^^^^^ Create Recipe ^^^^^^
+// ^^^^^^ Create User ^^^^^^
 
 router.post('/', function(req, res){
 
-  Recipe().insert({
-    title: req.body.title,
-    body: req.body.body,
-    user_id: req.body.user_id
-  }, ['title', 'body', 'user_id']).then(function(result){
+  User().insert({
+    name: req.body.name,
+    email: req.body.email
+  }, ['id', 'name', 'email']).then(function(result){
     res.json(result);
     })
   });
 
   // **************************** READ ***********************************
 
-  // ^^^^^^ Read Recipe ^^^^^^
+  // ^^^^^^ Read User ^^^^^^
 
   router.get('/', function (req, res){
 
-  knex('recipe').select().then(function(result){
+  knex('user').select().then(function(result){
     res.json(result);
   });
 });
 
-// ^^^^^^ Read One Recipe ^^^^^^
+  // ^^^^^^ Read One User ^^^^^^
 
-router.get('/:id', function (req, res){
-knex('recipe').where('id', req.params.id).first().then(function(result){
-  res.json(result);
+  router.get('/:id', function (req, res){
+  knex('user').where('id', req.params.id).first().then(function(result){
+    res.json(result);
   });
 });
 
 // **************************** UPDATE ***********************************
 
-// ^^^^^^ Update Recipe ^^^^^^
+// ^^^^^^ Update User ^^^^^^
 
 router.put('/:id', function(req, res){
 
-  Recipe().where('id', req.params.id).update({
-    title: req.body.title,
-    body: req.body.body,
-    user_id: req.body.user_id
+  User().where('id', req.params.id).update({
+    name: req.body.name,
+    email: req.body.email
   }).then(function(result){
     res.json(result);
   });
@@ -55,11 +53,11 @@ router.put('/:id', function(req, res){
 
 // **************************** Delete ***********************************
 
-// ^^^^^^ Delete Recipe ^^^^^^
+// ^^^^^^ Delete User ^^^^^^
 
 router.delete('/:id', function(req, res){
 
-  Recipe().where('id', req.params.id).del().then(function(result){
+  User().where('id', req.params.id).del().then(function(result){
     res.json(result);
   });
 });

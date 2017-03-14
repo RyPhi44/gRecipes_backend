@@ -2,52 +2,48 @@ var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
 
-function Recipe() {return knex('recipe')}
+function Ingredient() {return knex('ingredient')}
 
 // **************************** CREATE ***********************************
 
-// ^^^^^^ Create Recipe ^^^^^^
+// ^^^^^^ Create Ingredient ^^^^^^
 
 router.post('/', function(req, res){
 
-  Recipe().insert({
-    title: req.body.title,
-    body: req.body.body,
-    user_id: req.body.user_id
-  }, ['title', 'body', 'user_id']).then(function(result){
+  Ingredient().insert({
+    name: req.body.name
+  }, ['name']).then(function(result){
     res.json(result);
     })
   });
 
   // **************************** READ ***********************************
 
-  // ^^^^^^ Read Recipe ^^^^^^
+  // ^^^^^^ Read Ingredient ^^^^^^
 
   router.get('/', function (req, res){
 
-  knex('recipe').select().then(function(result){
+  knex('ingredient').select().then(function(result){
     res.json(result);
   });
 });
 
-// ^^^^^^ Read One Recipe ^^^^^^
+// ^^^^^^ Read One Ingredient ^^^^^^
 
 router.get('/:id', function (req, res){
-knex('recipe').where('id', req.params.id).first().then(function(result){
+knex('ingredient').where('id', req.params.id).first().then(function(result){
   res.json(result);
   });
 });
 
 // **************************** UPDATE ***********************************
 
-// ^^^^^^ Update Recipe ^^^^^^
+// ^^^^^^ Update Ingredient ^^^^^^
 
 router.put('/:id', function(req, res){
 
-  Recipe().where('id', req.params.id).update({
-    title: req.body.title,
-    body: req.body.body,
-    user_id: req.body.user_id
+  Ingredient().where('id', req.params.id).update({
+    name: req.body.name
   }).then(function(result){
     res.json(result);
   });
@@ -55,11 +51,11 @@ router.put('/:id', function(req, res){
 
 // **************************** Delete ***********************************
 
-// ^^^^^^ Delete Recipe ^^^^^^
+// ^^^^^^ Delete Ingredient ^^^^^^
 
 router.delete('/:id', function(req, res){
 
-  Recipe().where('id', req.params.id).del().then(function(result){
+  Ingredient().where('id', req.params.id).del().then(function(result){
     res.json(result);
   });
 });

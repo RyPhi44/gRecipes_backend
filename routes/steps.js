@@ -2,52 +2,52 @@ var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
 
-function Recipe() {return knex('recipe')}
+function Step() {return knex('step')}
 
 // **************************** CREATE ***********************************
 
-// ^^^^^^ Create Recipe ^^^^^^
+// ^^^^^^ Create Step ^^^^^^
 
 router.post('/', function(req, res){
 
-  Recipe().insert({
-    title: req.body.title,
+  Step().insert({
     body: req.body.body,
-    user_id: req.body.user_id
-  }, ['title', 'body', 'user_id']).then(function(result){
+    step_number: req.body.step_number,
+    recipe_id: req.body.recipe_id
+  }, ['body', 'step_number', 'recipe_id']).then(function(result){
     res.json(result);
     })
   });
 
   // **************************** READ ***********************************
 
-  // ^^^^^^ Read Recipe ^^^^^^
+  // ^^^^^^ Read Step ^^^^^^
 
   router.get('/', function (req, res){
 
-  knex('recipe').select().then(function(result){
+  knex('step').select().then(function(result){
     res.json(result);
   });
 });
 
-// ^^^^^^ Read One Recipe ^^^^^^
+// ^^^^^^ Read One Step ^^^^^^
 
 router.get('/:id', function (req, res){
-knex('recipe').where('id', req.params.id).first().then(function(result){
+knex('step').where('id', req.params.id).first().then(function(result){
   res.json(result);
-  });
+});
 });
 
 // **************************** UPDATE ***********************************
 
-// ^^^^^^ Update Recipe ^^^^^^
+// ^^^^^^ Update Step ^^^^^^
 
 router.put('/:id', function(req, res){
 
-  Recipe().where('id', req.params.id).update({
-    title: req.body.title,
+  Step().where('id', req.params.id).update({
     body: req.body.body,
-    user_id: req.body.user_id
+    step_number: req.body.step_number,
+    recipe_id: req.body.recipe_id
   }).then(function(result){
     res.json(result);
   });
@@ -55,11 +55,11 @@ router.put('/:id', function(req, res){
 
 // **************************** Delete ***********************************
 
-// ^^^^^^ Delete Recipe ^^^^^^
+// ^^^^^^ Delete Step ^^^^^^
 
 router.delete('/:id', function(req, res){
 
-  Recipe().where('id', req.params.id).del().then(function(result){
+  Step().where('id', req.params.id).del().then(function(result){
     res.json(result);
   });
 });

@@ -6,6 +6,7 @@ exports.up = function(knex) {
     table.timestamp('timestamp').defaultTo(knex.fn.now())
     table.integer('rating')
     table.integer('user_id').references('user.id').onDelete('cascade')
+    table.integer('recipe_id').references('recipe.id').onDelete('cascade')
   })
 };
 

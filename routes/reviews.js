@@ -2,52 +2,54 @@ var express = require('express');
 var router = express.Router();
 var knex = require('../db/knex');
 
-function Recipe() {return knex('recipe')}
+function Review() {return knex('review')}
 
 // **************************** CREATE ***********************************
 
-// ^^^^^^ Create Recipe ^^^^^^
+// ^^^^^^ Create Review ^^^^^^
 
 router.post('/', function(req, res){
 
-  Recipe().insert({
-    title: req.body.title,
-    body: req.body.body,
-    user_id: req.body.user_id
-  }, ['title', 'body', 'user_id']).then(function(result){
+  Review().insert({
+    comment: req.body.comment,
+    rating: req.body.rating,
+    user_id: req.body.user_id,
+    recipe_id: req.body.recipe_id
+  }, ['comment', 'rating', 'user_id', 'recipe_id']).then(function(result){
     res.json(result);
     })
   });
 
   // **************************** READ ***********************************
 
-  // ^^^^^^ Read Recipe ^^^^^^
+  // ^^^^^^ Read Review ^^^^^^
 
   router.get('/', function (req, res){
 
-  knex('recipe').select().then(function(result){
+  knex('review').select().then(function(result){
     res.json(result);
   });
 });
 
-// ^^^^^^ Read One Recipe ^^^^^^
+// ^^^^^^ Read One Review ^^^^^^
 
 router.get('/:id', function (req, res){
-knex('recipe').where('id', req.params.id).first().then(function(result){
+knex('review').where('id', req.params.id).first().then(function(result){
   res.json(result);
   });
 });
 
 // **************************** UPDATE ***********************************
 
-// ^^^^^^ Update Recipe ^^^^^^
+// ^^^^^^ Update Review ^^^^^^
 
 router.put('/:id', function(req, res){
 
-  Recipe().where('id', req.params.id).update({
-    title: req.body.title,
-    body: req.body.body,
-    user_id: req.body.user_id
+  Review().where('id', req.params.id).update({
+    comment: req.body.comment,
+    rating: req.body.rating,
+    user_id: req.body.user_id,
+    recipe_id: req.body.recipe_id
   }).then(function(result){
     res.json(result);
   });
@@ -55,11 +57,11 @@ router.put('/:id', function(req, res){
 
 // **************************** Delete ***********************************
 
-// ^^^^^^ Delete Recipe ^^^^^^
+// ^^^^^^ Delete Review ^^^^^^
 
 router.delete('/:id', function(req, res){
 
-  Recipe().where('id', req.params.id).del().then(function(result){
+  Review().where('id', req.params.id).del().then(function(result){
     res.json(result);
   });
 });
