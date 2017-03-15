@@ -33,7 +33,14 @@ router.post('/', function(req, res){
 // ^^^^^^ Read One Recipe ^^^^^^
 
 router.get('/:id', function (req, res){
-knex('recipe').where('id', req.params.id).first().then(function(result){
+knex('recipe')
+.join('user', 'user.id', '=', 'recipe.user_id')
+.join('ingredient_recipe', 'ingredient_recipe.recipe_id', '=', 'recipe.id')
+.join('ingredient', 'ingredient_recipe.ingredient_id', '=', 'ingredient.id')
+.select('*', 'ingredient.name as ingredient_name', 'user.name as name')
+.where('recipe.id', req.params.id)
+// .first()
+.then(function(result){
   res.json(result);
   });
 });
