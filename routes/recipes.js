@@ -25,7 +25,11 @@ router.post('/', function(req, res){
 
   router.get('/', function (req, res){
 
-  knex('recipe').select().then(function(result){
+  knex('recipe').join('user', 'user.id', '=', 'recipe.user_id')
+  .join('ingredient_recipe', 'ingredient_recipe.recipe_id', '=', 'recipe.id')
+  .join('ingredient', 'ingredient_recipe.ingredient_id', '=', 'ingredient.id')
+  .select('*', 'ingredient.name as ingredient_name', 'user.name as name')
+  .select().then(function(result){
     res.json(result);
   });
 });

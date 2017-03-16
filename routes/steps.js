@@ -25,7 +25,10 @@ router.post('/', function(req, res){
 
   router.get('/', function (req, res){
 
-  knex('step').select().then(function(result){
+  knex('step')
+  .join('recipe', 'recipe.id', '=', 'step.recipe_id')
+  .select('*', 'step.body as step_body', 'recipe.body as recipe_body')
+  .then(function(result){
     res.json(result);
   });
 });
@@ -33,7 +36,12 @@ router.post('/', function(req, res){
 // ^^^^^^ Read One Step ^^^^^^
 
 router.get('/:id', function (req, res){
-knex('step').where('id', req.params.id).first().then(function(result){
+knex('step')
+.join('recipe', 'recipe.id', '=', 'step.recipe_id')
+.select('*', 'step.body as step_body', 'recipe.body as recipe_body' )
+.where('step.id', req.params.id)
+.first()
+.then(function(result){
   res.json(result);
 });
 });

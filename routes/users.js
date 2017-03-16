@@ -23,11 +23,13 @@ router.post('/', function(req, res){
   // ^^^^^^ Read User ^^^^^^
 
   router.get('/', function (req, res){
-
-  knex('user')
-  // .join('review', 'review.id', '=', 'user.user_id')
+// check req.query.email
+  var getUsers = knex('user')
   .select()
-  .then(function(result){
+  if(req.query.email){
+    getUsers.where('email', req.query.email)
+  }
+  getUsers.then(function(result){
     res.json(result);
   });
 });
@@ -36,8 +38,7 @@ router.post('/', function(req, res){
 
   router.get('/:id', function (req, res){
   knex('user')
-  .join('review', 'review.id', '=', 'user.user_id')
-  .where('user.id', req.params.id)
+  .where('user', req.params.id)
   .first()
   .then(function(result){
     res.json(result);

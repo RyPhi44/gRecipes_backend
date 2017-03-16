@@ -26,7 +26,10 @@ router.post('/', function(req, res){
 
   router.get('/', function (req, res){
 
-  knex('review').select().then(function(result){
+  knex('review')
+  .join('user', 'user.id', '=', 'review.user_id')
+  .select()
+  .then(function(result){
     res.json(result);
   });
 });
@@ -34,7 +37,11 @@ router.post('/', function(req, res){
 // ^^^^^^ Read One Review ^^^^^^
 
 router.get('/:id', function (req, res){
-knex('review').where('id', req.params.id).first().then(function(result){
+knex('review')
+.join('user', 'user.id', '=', 'review.user_id')
+.where('review.id', req.params.id)
+.first()
+.then(function(result){
   res.json(result);
   });
 });
